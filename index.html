@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Banner QA Tools</title>
+	<style type="text/css">
+
+		#bannerContent {
+			position: absolute;
+			width: 300px;
+			height: 250px;
+			border: 1px solid black;
+			box-sizing: border-box;
+		}
+
+		#testCopy {
+			position: relative;
+		}
+
+	</style>
+</head>
+
+
+<body id="main">
+	<div id="bannerContent">
+		<div id="testCopy">
+			<p>Test Copy</p>
+			<p>Test Copy</p>
+		</div>
+		<div>
+			Lorem ipsum <br /> lorem ipsum
+		</div>
+	</div>
+
+</body>
+
+<!-- Dev Scripts -->
+<script src="BannerTools_v02.js"></script>
+<script src="Timer_v02.js"></script>
+<script src="BackupImage_v01.js"></script>
+<script src="OnionSkin_v02.js"></script>
+
+
+
+
+
+<script>
+	function init() {
+
+		var event = document.createEvent('Event');
+		event.initEvent('build', true, true);
+		var bannerContent = document.getElementById("bannerContent");
+		bannerContent.dispatchEvent(event);
+	}
+
+
+	window.onload = init();
+
+</script>
+</html>
