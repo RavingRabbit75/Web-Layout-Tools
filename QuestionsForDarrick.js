@@ -1,11 +1,20 @@
 
 // Difference between the two placements of parentheses at end of module:
 
-var MODULE = (function () {
+function unnamed() {
+  var my;
+  return my;
+}
+var MODULE = unnamed();
+
+var MODULE = function () {
     var my;
     return my;
-}());
+};
 
+
+
+var n = (3+4)*5;
 
 var MODULE = (function () {
     var my;
@@ -13,11 +22,27 @@ var MODULE = (function () {
 })();
 
 
+var obj = {
+  add: function() {
+
+  },
+  subtract: function() {
+
+  }
+};
+
+(function() {
+
+})
+
 // Typical ways to organize code?
 
 // How to organizing code for website vs sever-side/application?
 
-
+var obj = {
+  foo: 5,
+  bar:
+}
 
 
 // What's the purpose of this pattern? Is this an object pattern of some sort?:
@@ -31,14 +56,16 @@ var subObject = {
 
 	init: function() {
 		console.log("shit happens");
-        var x = 15;
+    var x = 15;
+    return x;
 	},
 
-    // this doesn't work:
-	//var xx = 5;
+  // this does work:
+	xx: 5
 
 };
 
 console.log(subObject.settings.path);
-subObject.init();
-console.log(x); // this doesn't output 15...gets an error
+
+console.log(subObject.init()); // this doesn't output 15...gets an error
+console.log(subObject.xx);

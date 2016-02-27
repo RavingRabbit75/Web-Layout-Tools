@@ -174,9 +174,9 @@ var BannerTools = (function() {
 		bannerToolsPanel.style.paddingTop = "3px";
 		bannerToolsPanel.style.paddingLeft = "3px";
 		bannerToolsPanel.style.borderBottom = "1px solid #666666";
-	    bannerToolsPanel.style.width = "200px";
-	    bannerToolsPanel.style.height = "150px";
-	    bannerToolsPanel.style.background = "#dddddd";
+    bannerToolsPanel.style.width = "200px";
+    bannerToolsPanel.style.height = "150px";
+    bannerToolsPanel.style.background = "#dddddd";
 
 		for (var i = 0; i < modulesList.length; i++) {
 			modulesList[i].verticalLayout();
@@ -191,9 +191,9 @@ var BannerTools = (function() {
 		bannerToolsPanel.style.paddingTop = "3px";
 		bannerToolsPanel.style.paddingLeft = "3px";
 		bannerToolsPanel.style.borderRight = "1px solid #666666";
-	    bannerToolsPanel.style.width = "200px";
-	    bannerToolsPanel.style.height = "200px";
-	    bannerToolsPanel.style.background = "#dddddd";
+    bannerToolsPanel.style.width = "200px";
+    bannerToolsPanel.style.height = "200px";
+    bannerToolsPanel.style.background = "#dddddd";
 
 		for (var i = 0; i < modulesList.length; i++) {
 			modulesList[i].horizontalLayout();
@@ -216,18 +216,16 @@ var BannerTools = (function() {
 		tinyWindow.style.position = "absolute";
 		tinyWindow.style.padding = "0px";
 		tinyWindow.style.margin= "0px";
+		tinyWindow.style.border="1px solid black";
 		tinyWindow.style.right = "2px";
-		tinyWindow.style.top = "0px";
-		tinyWindow.style.width = "auto";
-		tinyWindow.style.height = "auto";
+		tinyWindow.style.top = "2px";
+		tinyWindow.style.width = "15px";
+		tinyWindow.style.height = "15px";
+		tinyWindow.style.cursor = "pointer";
+		tinyWindow.title = "Open Banner Tools";
 		body.insertBefore(tinyWindow, document.getElementById(""));
 
-		var openToolsBtn = document.createElement("button");
-		openToolsBtn.id = "openBannerToolsButton";
-		openToolsBtn.innerHTML = "";
-		tinyWindow.appendChild(openToolsBtn);
-
-		openToolsBtn.addEventListener("click", maximizeBannerTools);
+		tinyWindow.addEventListener("click", maximizeBannerTools);
 
 		function maximizeBannerTools(event) {
 			sessionStorage.setItem("consoleWinMinimized", "false");
