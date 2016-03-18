@@ -45,6 +45,7 @@ var BannerTools = (function() {
 		consoleWindow.style.padding = "0px";
 		consoleWindow.style.margin = "0px";
 
+
 		body.insertBefore(consoleWindow, document.getElementById(""));
 
 		if (priorSessionLocation == "right" || priorSessionLocation == null) {
@@ -65,6 +66,7 @@ var BannerTools = (function() {
 		consoleWindow.style.height = "100%";
 		consoleWindow.style.overflowY = "auto";
 		consoleWindow.style.overflowX = "hidden";
+		consoleWindow.style.whiteSpace = "initial";
 
 		drawBannerToolsRight();
 	}
@@ -79,6 +81,7 @@ var BannerTools = (function() {
 		consoleWindow.style.height = "200px";
 		consoleWindow.style.overflowY = "hidden";
 		consoleWindow.style.overflowX = "auto";
+		consoleWindow.style.whiteSpace = "nowrap";
 
 		drawBannerToolsBottom();
 	}
@@ -90,6 +93,7 @@ var BannerTools = (function() {
 		bannerToolsPanel.style.boxSizing = "border-box";
 		bannerToolsPanel.style.verticalAlign = "top";
 		bannerToolsPanel.style.margin = "0px";
+
 
 		if (priorSessionLocation == "right" || priorSessionLocation == null ) {
 			drawBannerToolsRight();
@@ -174,9 +178,9 @@ var BannerTools = (function() {
 		bannerToolsPanel.style.paddingTop = "3px";
 		bannerToolsPanel.style.paddingLeft = "3px";
 		bannerToolsPanel.style.borderBottom = "1px solid #666666";
-    bannerToolsPanel.style.width = "200px";
-    bannerToolsPanel.style.height = "150px";
-    bannerToolsPanel.style.background = "#dddddd";
+	    bannerToolsPanel.style.width = "200px";
+	    bannerToolsPanel.style.height = "150px";
+	    bannerToolsPanel.style.background = "#dddddd";
 
 		for (var i = 0; i < modulesList.length; i++) {
 			modulesList[i].verticalLayout();
@@ -191,9 +195,10 @@ var BannerTools = (function() {
 		bannerToolsPanel.style.paddingTop = "3px";
 		bannerToolsPanel.style.paddingLeft = "3px";
 		bannerToolsPanel.style.borderRight = "1px solid #666666";
-    bannerToolsPanel.style.width = "200px";
-    bannerToolsPanel.style.height = "200px";
-    bannerToolsPanel.style.background = "#dddddd";
+	    bannerToolsPanel.style.width = "200px";
+	    bannerToolsPanel.style.height = "200px";
+	    bannerToolsPanel.style.background = "#dddddd";
+		bannerToolsPanel.style.whiteSpace = "initial";
 
 		for (var i = 0; i < modulesList.length; i++) {
 			modulesList[i].horizontalLayout();

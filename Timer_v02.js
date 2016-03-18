@@ -14,6 +14,9 @@ var Timer = (function() {
 	var oneTenthDigit = 0;
 	var oneHundredthDigit = 0;
 
+	var timer;
+	var timerRunning = false; // boolean indicating if timer is running
+
 	// get the prior status of the timer start on reload
 	// true, false
 	var timerStartOnLoad = sessionStorage.getItem("timerStartOnLoad");
@@ -24,7 +27,7 @@ var Timer = (function() {
 
 	// init function
 	(function () {
-	    consoleWindow.appendChild(timerPanel);
+		consoleWindow.appendChild(timerPanel);
 		timerPanel.style.paddingBottom = "5px";
 		title.style.fontFamily = "sans-serif";
 		title.style.position = "relative";
@@ -34,15 +37,15 @@ var Timer = (function() {
 		timerPanel.appendChild(title);
 	})();
 
-	var buttonStart = document.createElement("button");
-    var buttonBreak = document.createElement("button");
+	var buttonStartStop = document.createElement("button");
+	var buttonBreak = document.createElement("button");
 	var checkbox01 = document.createElement('input');
 	checkbox01.type = "checkbox";
 
-	buttonStart.id = "timer_button01";
-    buttonStart.innerHTML = "Start";
-    buttonBreak.id = "timer_button02";
-    buttonBreak.innerHTML = "Break";
+	buttonStartStop.id = "timer_button01";
+	buttonStartStop.innerHTML = "Start";
+	buttonBreak.id = "timer_button02";
+	buttonBreak.innerHTML = "Break";
 
 	var checkBox01_field = document.createElement("div");
 	checkBox01_field.style.marginTop = "5px";
@@ -57,8 +60,8 @@ var Timer = (function() {
 	label.style.fontSize = "12px";
 	label.appendChild(document.createTextNode('Start on Reload'));
 
-	timerPanel.appendChild(buttonStart);
-    timerPanel.appendChild(buttonBreak);
+	timerPanel.appendChild(buttonStartStop);
+	timerPanel.appendChild(buttonBreak);
 	timerPanel.appendChild(checkBox01_field);
 	checkBox01_field.appendChild(checkbox01);
 	checkBox01_field.appendChild(label);
@@ -89,13 +92,36 @@ var Timer = (function() {
 
 	buttonBreak.addEventListener("click", buttonBreakClick, false);
 	function buttonBreakClick(event) {
-		var temp = display[0] + ":" + display[1] + display[2] + "." + display[3] + display[4];;
-		console.log(temp);
+		if (timerRunning) {
+			var temp = display[0] + ":" + display[1] + display[2] + "." + display[3] + display[4];
+			addTimerBreakPoint(temp, "break button");
+		}
+
+	}
+
+	buttonStartStop.addEventListener("click", buttonStartClick, false);
+	function buttonStartClick(event) {
+		startTimer();
+		timerRunning = true;
+		buttonStartStop.innerHTML = "Stop";
+		buttonStartStop.removeEventListener("click", buttonStartClick, false);
+		buttonStartStop.addEventListener("click", buttonStopClick, false);
+	}
+	function buttonStopClick(event) {
+		stopTimer();
+		timerRunning = false;
+		buttonStartStop.innerHTML = "Start";
+		buttonStartStop.removeEventListener("click", buttonStopClick, false);
+		buttonStartStop.addEventListener("click", buttonStartClick, false);
 	}
 
 	if (timerStartOnLoad=="true") {
 		checkbox01.checked = true;
 		startTimer();
+		timerRunning = true;
+		buttonStartStop.innerHTML = "Stop";
+		buttonStartStop.removeEventListener("click", buttonStartClick, false);
+		buttonStartStop.addEventListener("click", buttonStopClick, false);
 	} else {
 		checkbox01.checked = false;
 	}
@@ -112,14 +138,32 @@ var Timer = (function() {
 
 	var breakPointList = new Array(); // Array to contain multiple timer break points
 
-	(function addTimerBreakPoint() {
+
+	function addTimerBreakPoint(breakTimeString, breakTimeLabel) {
 		var breakpointObject = document.createElement("div");
 		breakpointObject.style.position = "relative";
 		breakpointObject.style.width = "auto";
-		breakpointObject.style.height = "30px";
+		// breakpointObject.style.height = "30px";
 		breakpointObject.style.borderBottom = "1px dashed #BBBBBB";
+		// breakpointObject.style.borderTop = "1px solid red";
+
+		breakpointObject.style.fontFamily = "sans-serif";
+		breakpointObject.style.fontSize = "20px";
+		breakpointObject.style.paddingTop = "4px";
+		breakpointObject.style.paddingBottom = "3px";
+		breakpointObject.style.paddingLeft = "4px";
+
+		breakpointObject.innerHTML = breakTimeString;
 		timerBreakPointsBox.appendChild(breakpointObject);
-	})();
+
+		var breakpointLabel = document.createElement("div");
+		breakpointLabel.style.position = "absolute";
+		breakpointLabel.style.top = "4px";
+		breakpointLabel.style.left = "80px";
+		breakpointLabel.style.fontSize = "10px";
+		breakpointLabel.innerHTML = breakTimeLabel;
+		breakpointObject.appendChild(breakpointLabel);
+	}
 
 	function addToTime() {
 
@@ -163,14 +207,14 @@ var Timer = (function() {
 		timerPanel.style.paddingTop = "3px";
 		timerPanel.style.paddingLeft = "3px";
 		timerPanel.style.margin = "0px";
-	    timerPanel.style.boxSizing = "border-box";
+		timerPanel.style.boxSizing = "border-box";
 		timerPanel.style.border = "none";
 		timerPanel.style.borderBottom = "1px solid #666666";
-	    timerPanel.style.right = "0px";
+		timerPanel.style.right = "0px";
 		timerPanel.style.top = "auto";
-	    timerPanel.style.width = "200px";
-	    timerPanel.style.height = "auto";
-	    timerPanel.style.background = "#dddddd";
+		timerPanel.style.width = "200px";
+		timerPanel.style.height = "auto";
+		timerPanel.style.background = "#dddddd";
 		timerPanel.style.verticalAlign = "none";
 
 		timerBreakPointsBox.style.position = "relative";
@@ -185,30 +229,32 @@ var Timer = (function() {
 		timerPanel.style.paddingTop = "3px";
 		timerPanel.style.paddingLeft = "3px";
 		timerPanel.style.margin = "0px";
-	    timerPanel.style.boxSizing = "border-box";
+    	timerPanel.style.boxSizing = "border-box";
 		timerPanel.style.border = "none";
 		timerPanel.style.borderRight = "1px solid #666666";
-	    timerPanel.style.right = "auto";
+    	timerPanel.style.right = "auto";
 		timerPanel.style.top = "auto";
-	    timerPanel.style.width = "370px";
-	    timerPanel.style.height = "200px";
-	    timerPanel.style.background = "#dddddd";
+    	timerPanel.style.width = "370px";
+    	timerPanel.style.height = "200px";
+    	timerPanel.style.background = "#dddddd";
 		timerPanel.style.verticalAlign = "top";
+		timerPanel.style.whiteSpace = "initial";
 
 		timerBreakPointsBox.style.position = "absolute";
 		timerBreakPointsBox.style.left = "170px";
 		timerBreakPointsBox.style.top = "25px";
 	}
 
+
 	function startTimer () {
 		display = addToTime();
 		timerDisplay.innerHTML = display[0] + ":" + display[1] + display[2] + "." + display[3] + display[4];
 
-		var t = setTimeout(function() {startTimer()},10);
+		timer = setTimeout(function() {startTimer()},10);
 	};
 
 	function stopTimer () {
-		clearTimeout(t);
+		clearTimeout(timer);
 	};
 
 	return {

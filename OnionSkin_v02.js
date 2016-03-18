@@ -17,7 +17,7 @@ var OnionSkin = (function() {
 
 	// init function
 	(function () {
-	    consoleWindow.appendChild(onionSkinPanel);
+	  consoleWindow.appendChild(onionSkinPanel);
 		title.style.fontFamily = "sans-serif";
 		title.style.position = "relative";
 		title.style.fontSize = "12px";
@@ -31,20 +31,37 @@ var OnionSkin = (function() {
 		onionContainer = document.getElementById("bannerContent");
 		var node = document.createElement("div");
 		node.style.position = "absolute";
-	    node.style.left = "0px";
-	    node.style.top = "0px";
-	    node.style.width = "300px";
-	    node.style.height = "250px";
-	    node.setAttribute("id", "onionLayer");
-	    onionContainer.appendChild(node);
-	    onionContainer.style.zIndex = 999999;
+		node.style.left = "0px";
+		node.style.top = "0px";
+		node.style.width = "300px";
+		node.style.height = "250px";
+		node.setAttribute("id", "onionLayer");
+		onionContainer.appendChild(node);
+		onionContainer.style.zIndex = 999999;
 	})();
 
 	var pathInputField = document.createElement("INPUT");
 	pathInputField.setAttribute("type", "text");
 	pathInputField.setAttribute("size", "25");
 	pathInputField.setAttribute("id", "onionPath");
+	pathInputField.addEventListener("keypress", handleKeyPress);
 	onionSkinPanel.appendChild(pathInputField);
+
+	function handleKeyPress(event) {
+		// if enter key is pressed
+		if (event.keyCode === 13) {
+			var onionPath = document.getElementById("onionPath").value;
+			setOnionSkin(onionPath);
+			if (lastVisibleOpacityLevel == null) {
+				opacitySlider.value = 100;
+				setOnionOpacity(1.0);
+			} else {
+				opacitySlider.value = lastVisibleOpacityLevel;
+				setOnionOpacity(lastVisibleOpacityLevel/100);
+			}
+			sessionStorage.setItem("opacityLevel", opacitySlider.value);
+		}
+	}
 
 	var opacitySlider = document.createElement("INPUT");
 	opacitySlider.setAttribute("type", "range");
@@ -78,30 +95,30 @@ var OnionSkin = (function() {
     onionSkinPanel.appendChild(buttonHide);
 
     buttonShow.addEventListener("click", buttonShowClick);
-	buttonHide.addEventListener("click", buttonHideClick);
+		buttonHide.addEventListener("click", buttonHideClick);
 
     function buttonShowClick(event) {
-		var onionPath = document.getElementById("onionPath").value;
-        setOnionSkin(onionPath);
-		if (lastVisibleOpacityLevel == null) {
-			opacitySlider.value = 100;
-			setOnionOpacity(1.0);
-		} else {
-			opacitySlider.value = lastVisibleOpacityLevel;
-			setOnionOpacity(lastVisibleOpacityLevel/100);
-		}
+			var onionPath = document.getElementById("onionPath").value;
+    	setOnionSkin(onionPath);
+			if (lastVisibleOpacityLevel == null) {
+				opacitySlider.value = 100;
+				setOnionOpacity(1.0);
+			} else {
+				opacitySlider.value = lastVisibleOpacityLevel;
+				setOnionOpacity(lastVisibleOpacityLevel/100);
+			}
 
-		sessionStorage.setItem("opacityLevel", opacitySlider.value);
-
+			sessionStorage.setItem("opacityLevel", opacitySlider.value);
     }
+
     function buttonHideClick(event) {
-		if (opacitySlider.value > 0) {
-			lastVisibleOpacityLevel = opacitySlider.value;
-			sessionStorage.setItem("lastVisibleOpacityLevel", lastVisibleOpacityLevel);
-		}
-		opacitySlider.value = 0;
-		setOnionOpacity(0);
-		sessionStorage.setItem("opacityLevel", 0);
+			if (opacitySlider.value > 0) {
+				lastVisibleOpacityLevel = opacitySlider.value;
+				sessionStorage.setItem("lastVisibleOpacityLevel", lastVisibleOpacityLevel);
+			}
+			opacitySlider.value = 0;
+			setOnionOpacity(0);
+			sessionStorage.setItem("opacityLevel", 0);
     }
 
 
@@ -143,32 +160,32 @@ var OnionSkin = (function() {
 		onionSkinPanel.style.paddingTop = "3px";
 		onionSkinPanel.style.paddingLeft = "3px";
 		onionSkinPanel.style.margin = "0px";
-	    onionSkinPanel.style.boxSizing = "border-box";
+	  onionSkinPanel.style.boxSizing = "border-box";
 		onionSkinPanel.style.border = "none";
 		onionSkinPanel.style.borderBottom = "1px solid #666666";
-	    onionSkinPanel.style.right = "0px";
+	  onionSkinPanel.style.right = "0px";
 		onionSkinPanel.style.top = "auto";
-	    onionSkinPanel.style.width = "200px";
-	    onionSkinPanel.style.height = "100px";
-	    onionSkinPanel.style.background = "#dddddd";
+	  onionSkinPanel.style.width = "200px";
+	  onionSkinPanel.style.height = "100px";
+	  onionSkinPanel.style.background = "#dddddd";
 		onionSkinPanel.style.verticalAlign = "none";
 	}
 
 	function changeToHorizontalLayout() {
 		onionSkinPanel.style.display = "inline-block";
-
 		onionSkinPanel.style.position = "relative";
 		onionSkinPanel.style.paddingTop = "3px";
 		onionSkinPanel.style.paddingLeft = "3px";
 		onionSkinPanel.style.margin = "0px";
-	    onionSkinPanel.style.boxSizing = "border-box";
+		onionSkinPanel.style.boxSizing = "border-box";
 		onionSkinPanel.style.border = "none";
 		onionSkinPanel.style.borderRight = "1px solid #666666";
-	    onionSkinPanel.style.right = "auto";
+		onionSkinPanel.style.right = "auto";
 		onionSkinPanel.style.top = "auto";
-	    onionSkinPanel.style.width = "200px";
-	    onionSkinPanel.style.height = "200px";
-	    onionSkinPanel.style.background = "#dddddd";
+		onionSkinPanel.style.width = "200px";
+		onionSkinPanel.style.height = "200px";
+		onionSkinPanel.style.background = "#dddddd";
+		onionSkinPanel.style.whiteSpace = "initial";
 		onionSkinPanel.style.verticalAlign = "top";
 
 	}
