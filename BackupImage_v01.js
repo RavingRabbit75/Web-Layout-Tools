@@ -5,8 +5,10 @@ var BackupImage = (function(){
 	var backupImagePanel = document.createElement("div");
 	var title = document.createElement("div");
 
-	var backupImage = document.getElementById("backupImage");
 
+	///////////////////////////////////////////////////////////
+	// internal functions
+	///////////////////////////////////////////////////////////
 
 	// init function
 	(function () {
@@ -19,6 +21,105 @@ var BackupImage = (function(){
 		backupImagePanel.appendChild(title);
 	})();
 
+	var pathInputField = document.createElement("INPUT");
+	pathInputField.setAttribute("type", "text");
+	pathInputField.setAttribute("size", "25");
+	pathInputField.setAttribute("id", "onionPath");
+	pathInputField.addEventListener("keypress", handleKeyPress);
+	backupImagePanel.appendChild(pathInputField);
+
+	function handleKeyPress(event) {
+		// if enter key is pressed
+		if (event.keyCode === 13) {
+			setBackupImage(pathInputField.value);
+		}
+	}
+
+	var btnToggleBackupImage = document.createElement("button");
+	btnToggleBackupImage.id = "btnToggleBackupImage";
+	btnToggleBackupImage.innerHTML = "Hide";
+	backupImagePanel.appendChild(btnToggleBackupImage);
+
+	btnToggleBackupImage.addEventListener("click", hideBackupImageClick, false);
+	function hideBackupImageClick(event) {
+		btnToggleBackupImage.innerHTML = "Show";
+		btnToggleBackupImage.removeEventListener("click", hideBackupImageClick, false);
+
+		btnToggleBackupImage.addEventListener("click", showBackupImageClick, false);
+	}
+
+	function showBackupImageClick(event) {
+		btnToggleBackupImage.innerHTML = "Hide";
+		btnToggleBackupImage.removeEventListener("click", showBackupImageClick, false);
+
+		btnToggleBackupImage.addEventListener("click", hideBackupImageClick, false);
+	}
+
+	console.log(BannerTools.getWidth());
+
+	var backupImageWrapper = document.createElement("div");
+	backupImageWrapper.id = "backupImageWrapper";
+	// backupImageWrapper.style.border = "1px dashed green";
+	backupImageWrapper.style.boxSizing = "border-box";
+	backupImageWrapper.style.position = "relative";
+	var mainBody = document.getElementById("main");
+	mainBody.appendChild(backupImageWrapper);
+
+	var backupImage = document.createElement("div");
+	backupImage.id = "backupImage";
+	backupImage.style.border = "1px solid green";
+	backupImage.style.width = BannerTools.getWidth();
+	backupImage.style.height = BannerTools.getHeight();
+	backupImage.style.position = "relative";
+	backupImage.style.float = "left";
+	backupImage.style.boxSizing = "border-box";
+	backupImage.style.backgroundOrigin = "border-box";
+	backupImage.style.textAlign = "center";
+	backupImage.style.marginLeft = "10px";
+	var backupImageWrapper = document.getElementById("backupImageWrapper");
+	var consoleWindow = document.getElementById("consoleWindow")
+	backupImageWrapper.appendChild(backupImage);
+
+	var setBackupImage = function (path) {
+		var img = new Image();
+		img.onload = function () {
+			console.log("load good");
+			document.getElementById("backupImage").style.backgroundImage = "url("+path+")";
+			backupImage.innerHTML = null;
+		}
+		img.onerror = function () {
+			console.log("load bad");
+			document.getElementById("backupImage").style.backgroundImage = "url()";
+			backupImage.innerHTML = "<div id='ghostDiv'></div><div id='errorTextBox'><p id='errorText'>No Backup Image Available</p></div>";
+			var errorText = document.getElementById("errorText");
+			var errorTextBox = document.getElementById("errorTextBox");
+			var ghostDiv = document.getElementById("ghostDiv");
+			ghostDiv.style.display = "inline-block";
+			ghostDiv.innerHTML = "";
+			// ghostDiv.style.border = "1px solid orange";
+			ghostDiv.style.height = "99%";
+			ghostDiv.style.verticalAlign = "middle";
+
+			errorTextBox.style.display = "inline-block";
+			errorTextBox.style.verticalAlign = "middle";
+
+			// errorText.style.border = "1px dashed purple";
+			errorText.style.margin = "0px";
+		}
+		img.src = path;
+
+		// sessionStorage.setItem("lastOnionSkinPath", path);
+
+
+
+	};
+
+	setBackupImage("backupImage.jpg");
+	// var lastSkinPath = sessionStorage.getItem("lastOnionSkinPath");
+	// if (lastSkinPath !== "" && lastSkinPath !== null) {
+	// 	pathInputField.value = lastSkinPath;
+	// 	setOnionSkin(lastSkinPath);
+	// }
 
 
 	///////////////////////////////////////////////////////////
@@ -40,7 +141,7 @@ var BackupImage = (function(){
 	    backupImagePanel.style.width = "200px";
 	    backupImagePanel.style.height = "100px";
 	    backupImagePanel.style.background = "#dddddd";
-		backupImagePanel.style.verticalAlign = "none";
+		backupImagePanel.style.verticalAlign = "initial";
 	}
 
 	function changeToHorizontalLayout() {

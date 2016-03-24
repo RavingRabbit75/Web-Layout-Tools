@@ -147,8 +147,8 @@ var BannerTools = (function() {
 		notification.style.paddingLeft = "2px";
 		if (document.getElementById("bannerContent") !== null) {
 			bannerContainer = document.getElementById("bannerContent");
-			var bannerWidth = window.getComputedStyle(bannerContainer, null).getPropertyValue("width")
-			var bannerHeight = window.getComputedStyle(bannerContainer, null).getPropertyValue("height")
+			var bannerWidth = window.getComputedStyle(bannerContainer, null).getPropertyValue("width");
+			var bannerHeight = window.getComputedStyle(bannerContainer, null).getPropertyValue("height");
 			notification.innerHTML = parseInt(bannerWidth, 10) + " x " + parseInt(bannerHeight, 10);
 		} else {
 			notification.innerHTML = "No Banner Found";
@@ -269,8 +269,20 @@ var BannerTools = (function() {
 		}
 	}
 
+	function getBannerWidth() {
+		var width = window.getComputedStyle(bannerContainer, null).getPropertyValue("width");
+		return width;
+	}
+
+	function getBannerHeight() {
+		var height = window.getComputedStyle(bannerContainer, null).getPropertyValue("height");
+		return height;
+	}
+
 	return {
-		registerTool: registerBannerTool
+		registerTool: registerBannerTool,
+		getWidth: getBannerWidth,
+		getHeight: getBannerHeight
 	};
 
 

@@ -7,7 +7,8 @@
 	<style type="text/css">
 
 		#bannerContent {
-			position: absolute;
+			position: relative;
+		    float: left;
 			width: 300px;
 			height: 250px;
 			border: 1px solid black;
@@ -41,19 +42,13 @@
 <script src="BackupImage_v01.js"></script>
 <script src="OnionSkin_v02.js"></script>
 
-
-
-
-
 <script>
 	function init() {
-
 		var event = document.createEvent('Event');
 		event.initEvent('build', true, true);
 		var bannerContent = document.getElementById("bannerContent");
 		bannerContent.dispatchEvent(event);
 	}
-
 
 	window.onload = init();
 

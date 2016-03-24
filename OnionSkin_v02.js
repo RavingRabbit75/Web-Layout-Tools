@@ -168,7 +168,7 @@ var OnionSkin = (function() {
 	  onionSkinPanel.style.width = "200px";
 	  onionSkinPanel.style.height = "100px";
 	  onionSkinPanel.style.background = "#dddddd";
-		onionSkinPanel.style.verticalAlign = "none";
+		onionSkinPanel.style.verticalAlign = "initial";
 	}
 
 	function changeToHorizontalLayout() {

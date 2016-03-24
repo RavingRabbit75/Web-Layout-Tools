@@ -192,7 +192,7 @@ var Timer = (function() {
 
 
 	bannerContent.addEventListener('build', function (event) {
-	  console.log("banner has ended");
+		console.log("banner has ended");
 	}, false);
 
 
@@ -215,7 +215,7 @@ var Timer = (function() {
 		timerPanel.style.width = "200px";
 		timerPanel.style.height = "auto";
 		timerPanel.style.background = "#dddddd";
-		timerPanel.style.verticalAlign = "none";
+		timerPanel.style.verticalAlign = "initial";
 
 		timerBreakPointsBox.style.position = "relative";
 		timerBreakPointsBox.style.left = "0px";
@@ -257,11 +257,18 @@ var Timer = (function() {
 		clearTimeout(timer);
 	};
 
+	function addTimerBreak (breakTimeLabel) {
+		var temp = display[0] + ":" + display[1] + display[2] + "." + display[3] + display[4];
+		addTimerBreakPoint(temp, breakTimeLabel);
+	};
+
+
 	return {
 		verticalLayout: changeToVerticalLayout,
 		horizontalLayout: changeToHorizontalLayout,
 		start: startTimer,
-		stop: stopTimer
+		stop: stopTimer,
+		addBreak: addTimerBreak
 	};
 
 })();
