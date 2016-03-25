@@ -41,29 +41,28 @@ var BackupImage = (function(){
 	backupImagePanel.appendChild(btnToggleBackupImage);
 
 	btnToggleBackupImage.addEventListener("click", hideBackupImageClick, false);
+
 	function hideBackupImageClick(event) {
 		btnToggleBackupImage.innerHTML = "Show";
 		btnToggleBackupImage.removeEventListener("click", hideBackupImageClick, false);
-
+		backupImageWrapper.style.display = "none";
 		btnToggleBackupImage.addEventListener("click", showBackupImageClick, false);
 	}
 
 	function showBackupImageClick(event) {
 		btnToggleBackupImage.innerHTML = "Hide";
 		btnToggleBackupImage.removeEventListener("click", showBackupImageClick, false);
-
+		backupImageWrapper.style.display = "block";
 		btnToggleBackupImage.addEventListener("click", hideBackupImageClick, false);
 	}
-
-	console.log(BannerTools.getWidth());
 
 	var backupImageWrapper = document.createElement("div");
 	backupImageWrapper.id = "backupImageWrapper";
 	// backupImageWrapper.style.border = "1px dashed green";
 	backupImageWrapper.style.boxSizing = "border-box";
 	backupImageWrapper.style.position = "relative";
-	var mainBody = document.getElementById("main");
-	mainBody.appendChild(backupImageWrapper);
+	var bannerContent = document.getElementById("bannerContent");;
+	bannerContent.parentNode.insertBefore(backupImageWrapper, bannerContent.nextSibling);
 
 	var backupImage = document.createElement("div");
 	backupImage.id = "backupImage";
@@ -85,6 +84,7 @@ var BackupImage = (function(){
 		img.onload = function () {
 			console.log("load good");
 			document.getElementById("backupImage").style.backgroundImage = "url("+path+")";
+			
 			backupImage.innerHTML = null;
 		}
 		img.onerror = function () {
